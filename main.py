@@ -1,7 +1,9 @@
-import shutil
+
 from fastapi import FastAPI, File, UploadFile
 from deepface import DeepFace
 import os
+import shutil
+
 
 app = FastAPI()
 
@@ -62,3 +64,5 @@ def analyze_data(path):
     except ValueError as e:
         # Eliminar el archivo después de usarlo
         return "No se ha podido detectar un rostro en la imagen. Por favor, carga una imagen con un rostro visible."
+
+
