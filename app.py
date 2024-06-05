@@ -11,10 +11,10 @@ app = FastAPI()
 app.add_middleware(
 
     CORSMiddleware,
-    allow_origins=["http://localhost"],  # Permite solicitudes desde este origen
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
-    allow_headers=["*"],  # Permite todos los encabezados
+    allow_methods=["POST","GET"],
+    allow_headers=["*"],
 )
 
 # Define a directory to store uploaded images
@@ -24,6 +24,10 @@ UPLOAD_DIRECTORY = "images"
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 
+
+@app.get("/status")
+async def get_status():
+    return {"status": "API activa"}
 
 @app.post("/analyze")
 async def upload_image(image: UploadFile = File(...)):
