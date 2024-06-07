@@ -55,28 +55,44 @@ async def upload_image(image: UploadFile = File(...)):
             return {
                 "status": "failed",
                 "detail": "No se ha podido detectar un rostro en la imagen."
-            }, status.HTTP_422_UNPROCESSABLE_ENTITY
+            }
+
+    except Exception as e:
+        # Manejar cualquier excepción que pueda ocurrir durante el análisis de la imagen
+        return {
+            "status": "error",
+            "detail": f"Error al analizar la imagen: {str(e)}"
+        }
 
     finally:
         # Eliminar el archivo después de usarlo
         os.remove(temp_image_path)
 
-    # Return the analysis result
-    return analysis_result
-
+        # Return the analysis result along with the success status
+    return {
+        "status": "success",
+        "analysis_result": analysis_result
+    }
 
 
 def analyze_data(path):
     try:
         # Analizar edad, género, raza y emociones utilizando DeepFace
-        result = DeepFace.analyze(img_path= path, actions=('age', 'emotion'))
+        result = DeepFace.analyze(img_path=path, actions=('age', 'emotion'))
 
+        # Extraer las partes relevantes del resultado
         analysis_result = {
             'age': result['age'],
             'emotion': result['emotion'],
+            'message': "Análisis de la imagen completado con éxito."
         }
 
         return analysis_result
+
     except ValueError as e:
-        return None
+        error_message = "Error durante el análisis de la imagen: " + str(e)
+        return {
+            'error': True,
+            'message': error_message
+        }
 
