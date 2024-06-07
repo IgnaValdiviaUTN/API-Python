@@ -31,7 +31,7 @@ async def get_status():
 
 @app.get("/update")
 async def get_status():
-    return {"status": "API actualizada"}
+    return {"status": "API update"}
 
 @app.post("/analyze")
 async def upload_image(image: UploadFile = File(...)):
