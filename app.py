@@ -29,6 +29,10 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 async def get_status():
     return {"status": "API activa"}
 
+@app.get("/update")
+async def get_status():
+    return {"status": "API actualizada"}
+
 @app.post("/analyze")
 async def upload_image(image: UploadFile = File(...)):
     if not image.filename.endswith((".jpg", ".jpeg", ".png")):
