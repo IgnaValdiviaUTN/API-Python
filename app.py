@@ -70,7 +70,6 @@ async def upload_image(image: UploadFile = File(...)):
 
         # Return the analysis result along with the success status
     return {
-        "status": "success",
         "analysis_result": analysis_result
     }
 
@@ -83,8 +82,7 @@ def analyze_data(path):
         # Extraer las partes relevantes del resultado
         analysis_result = {
             'age': result['age'],
-            'emotion': result['emotion'],
-            'message': "Análisis de la imagen completado con éxito."
+            'emotion': result['emotion']
         }
 
         return analysis_result
