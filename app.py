@@ -69,9 +69,8 @@ async def upload_image(image: UploadFile = File(...)):
         os.remove(temp_image_path)
 
         # Return the analysis result along with the success status
-    return {
-        "analysis_result": analysis_result
-    }
+    return analysis_result
+    
 
 
 def analyze_data(path):
