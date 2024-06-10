@@ -1,4 +1,4 @@
-
+import gc
 from fastapi import FastAPI, File, UploadFile, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from deepface import DeepFace
@@ -67,10 +67,11 @@ async def upload_image(image: UploadFile = File(...)):
     finally:
         # Eliminar el archivo después de usarlo
         os.remove(temp_image_path)
+        gc.collect()
 
         # Return the analysis result along with the success status
     return analysis_result
-    
+
 
 
 def analyze_data(path):
